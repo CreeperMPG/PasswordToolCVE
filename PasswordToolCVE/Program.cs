@@ -46,7 +46,7 @@ while (true)
         try
         {
             string outpath = $"result-{Guid.NewGuid()}.txt";
-            ProcessStartInfo psi = new("fastprox_eop.exe", $"--cmd \"net user \"{username}\" \"{newPassword}\"\" --out \"{outpath}\"");
+            ProcessStartInfo psi = new("fastprox_eop.exe", $"--cmd \"net user \\\"{username}\\\" \\\"{newPassword}\\\"\" --out \"{outpath}\"");
             Process.Start(psi).WaitForExit();
             if (File.Exists(outpath))
             {
